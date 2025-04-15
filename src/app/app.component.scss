@@ -1,0 +1,17 @@
+main {
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#window {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  background-color: slategray;
+  border-radius: 16px;
+
+  position: absolute;
+}

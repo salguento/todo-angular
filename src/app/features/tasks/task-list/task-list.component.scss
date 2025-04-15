@@ -1,0 +1,16 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: auto;
+  position: relative;
+  height: 600px;
+  padding-top: 56px;
+}
+
+.list-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}

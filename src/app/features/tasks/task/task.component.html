@@ -1,0 +1,34 @@
+<mat-card class="card" appearance="raised">
+  <div class="card-header">
+    <mat-checkbox> </mat-checkbox>
+    <mat-card-header class="card-title">
+      <mat-card-title>Chihuahua</mat-card-title>
+    </mat-card-header>
+    <div class="card-options">
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <mat-card-content class="card-description">
+      <p>{{ longText }}</p>
+    </mat-card-content>
+    <mat-card-footer class="example-card-footer">
+      <mat-chip-set aria-label="Chihuahua traits">
+        <mat-chip>charming</mat-chip>
+        <mat-chip>graceful</mat-chip>
+        <mat-chip>sassy</mat-chip>
+      </mat-chip-set>
+    </mat-card-footer>
+  </div>
+</mat-card>

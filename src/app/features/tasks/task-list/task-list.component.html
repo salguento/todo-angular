@@ -1,0 +1,31 @@
+<div class="task-list">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">list</mat-icon>
+        Todos
+      </ng-template>
+      <div class="list-body">
+        @for (item of items; track item) {
+          <app-task></app-task>
+        } @empty {
+          <li>There are no items.</li>
+        }
+      </div>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">done_all</mat-icon>
+        Completed
+      </ng-template>
+      <div class="list-body">
+        @for (item of items; track item) {
+          <app-task></app-task>
+        } @empty {
+          <li>There are no items.</li>
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

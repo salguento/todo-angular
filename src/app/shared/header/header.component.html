@@ -1,0 +1,31 @@
+<div id="header">
+  <div id="header-left">
+    <img src="images/listo-logo.svg" />
+    <div class="header-title">
+      <h2>
+        {{ date | date: "shortDate" }}
+      </h2>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="menu">
+        <mat-card
+          (click)="$event.stopPropagation()"
+          class="demo-inline-calendar-card"
+        >
+          <mat-calendar
+            [(selected)]="date"
+            (selectedChange)="closeMenu()"
+          ></mat-calendar>
+        </mat-card>
+      </mat-menu>
+    </div>
+  </div>
+  <div id="header-right">
+    <app-new-task></app-new-task>
+  </div>
+</div>
