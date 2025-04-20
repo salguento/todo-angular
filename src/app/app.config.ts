@@ -1,16 +1,16 @@
-import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
-import { provideRouter } from "@angular/router";
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
-import { routes } from "./app.routes";
+import { routes } from './app.routes';
 import {
   provideClientHydration,
   withEventReplay,
-} from "@angular/platform-browser";
+} from '@angular/platform-browser';
 
-import { provideNativeDateAdapter } from "@angular/material/core";
-import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
-import { LOCALE_ID } from "@angular/core";
+import { LOCALE_ID } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideNativeDateAdapter(),
-    { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },
-    { provide: LOCALE_ID, useValue: "pt-BR" },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
 };

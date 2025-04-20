@@ -4,30 +4,76 @@
   padding: 8px;
 }
 
-.card-options {
+.task-item {
+  border-radius: 8px;
+  padding: 0;
+  height: auto;
+  &.p {
+    margin: 0;
+  }
+}
+.task-options {
+  display: flex;
+
+  visibility: hidden;
+}
+.task-body {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.task-header {
   display: flex;
   gap: 8px;
 }
-
-.card-header {
+.task-main {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.card-title {
+.task-title {
   width: 100%;
   padding: 0;
   color: white;
+  & > p {
+    margin: 0;
+  }
+}
+.task-body {
+  padding: 8px;
+  &:hover {
+    background-color: oklch(27.4% 0.006 286.033);
+    .task-options {
+      visibility: visible;
+    }
+  }
 }
 
-.card-body {
-  padding: 0 8px 4px 8px;
-}
-.card-description {
-  padding: 8px 0px;
+.task-description p {
+  font-size: 0.9rem;
   color: gray;
-}
-.card-description p {
   padding: 0;
   margin: 0;
+}
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.task-footer span {
+  color: slategray;
+  font-size: 0.8rem;
+}
+.tags,
+.due-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.footer-icon {
+  font-size: 1rem;
+  height: auto;
+  width: auto;
 }

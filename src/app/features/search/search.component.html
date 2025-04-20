@@ -1,0 +1,16 @@
+@if(searchIcon){<button
+  mat-icon-button
+  aria-label="Example icon button with a vertical three dot icon"
+  (click)="openDialog()"
+>
+  <mat-icon>search</mat-icon>
+</button>
+} @else {
+<button
+  mat-icon-button
+  aria-label="Example icon button with a vertical three dot icon"
+  (click)="clearSearch()"
+>
+  <mat-icon>close</mat-icon>
+</button>
+}

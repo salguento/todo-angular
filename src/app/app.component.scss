@@ -1,6 +1,6 @@
 main {
   height: 100vh;
-  background-color: black;
+  background-color: oklch(14.1% 0.005 285.823);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +10,8 @@ main {
   width: 800px;
   height: 600px;
   overflow: hidden;
-  background-color: slategray;
+  background-color: oklch(21% 0.006 285.885);
   border-radius: 16px;
-
+  border: 1px solid oklch(44.2% 0.017 285.786);
   position: absolute;
 }

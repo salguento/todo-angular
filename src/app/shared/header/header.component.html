@@ -1,16 +1,14 @@
 <div id="header">
   <div id="header-left">
-    <img src="images/listo-logo.svg" />
+    <img src="images/listo-logo.svg" class="logo" />
     <div class="header-title">
-      <h2>
-        {{ date | date: "shortDate" }}
-      </h2>
       <button
-        mat-icon-button
+        mat-button
         [matMenuTriggerFor]="menu"
         aria-label="Example icon-button with a menu"
       >
-        <mat-icon>keyboard_arrow_down</mat-icon>
+        <span class="date"> {{ date | date : "shortDate" }}</span>
+        <mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
       </button>
       <mat-menu #menu="matMenu" class="menu">
         <mat-card
@@ -19,13 +17,14 @@
         >
           <mat-calendar
             [(selected)]="date"
-            (selectedChange)="closeMenu()"
+            (selectedChange)="updateDate(); closeMenu()"
           ></mat-calendar>
         </mat-card>
       </mat-menu>
     </div>
   </div>
-  <div id="header-right">
+  <div class="header-right">
+    <app-search></app-search>
     <app-new-task></app-new-task>
   </div>
 </div>

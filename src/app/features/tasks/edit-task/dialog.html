@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Nova tarefa</h2>
+<h2 mat-dialog-title>Editar tarefa</h2>
 <mat-dialog-content class="mat-typography">
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <mat-label>Título</mat-label>
-      <input matInput placeholder="" [(ngModel)]="newTask.title" name="title" />
+      <input matInput placeholder="" [(ngModel)]="data.title" name="title" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
@@ -11,37 +11,27 @@
       <textarea
         matInput
         placeholder=""
-        [(ngModel)]="newTask.description"
+        [(ngModel)]="data.description"
         name="description"
       ></textarea>
     </mat-form-field>
-    <div class="date-time">
-      <mat-form-field>
-        <mat-label>Prazo</mat-label>
-        <input
-          matInput
-          [matDatepicker]="datepicker"
-          [(ngModel)]="newTask.dueDate"
-          name="dueDate"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="datepicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #datepicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Pick a time</mat-label>
-        <input
-          matInput
-          [(ngModel)]="newTask.dueDate"
-          [matTimepicker]="timepicker"
-          name="dueDate"
-        />
-        <mat-timepicker-toggle matIconSuffix [for]="timepicker" />
-        <mat-timepicker #timepicker />
-      </mat-form-field>
-    </div>
+
+    <mat-form-field>
+      <mat-label>Prazo</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="data.dueDate"
+        name="dueDate"
+      />
+      <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
     <mat-form-field class="example-chip-list">
       <mat-label>Etiquetas</mat-label>
       <mat-chip-grid #chipGrid aria-label="Tag selection">
@@ -62,27 +52,22 @@
         [matChipInputFor]="chipGrid"
         [matAutocomplete]="auto"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event); tagInput.value = ''"
+        (matChipInputTokenEnd)="add($event)"
       />
       <mat-autocomplete
         #auto="matAutocomplete"
         (optionSelected)="selected($event); tagInput.value = ''"
       >
-        @if(filteredTags() | async; as tags){ @for (tag of tags; track tag) {
-        <mat-option [value]="tag.name">{{tag.name}}</mat-option>
-        } }
+        @for (tag of filteredTags(); track tag) {
+        <mat-option [value]="tag">{{tag}}</mat-option>
+        }
       </mat-autocomplete>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button
-    mat-button
-    mat-dialog-close
-    [disabled]="!newTask.title"
-    (click)="addTodo()"
-  >
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="updateTask()">
     Adicionar
   </button>
 </mat-dialog-actions>

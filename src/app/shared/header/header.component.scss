@@ -4,31 +4,50 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 8px;
+  padding: 12px 12px;
   background-color: rgba(10, 10, 10, 0.5);
   width: 800px;
   height: 56px;
   position: absolute;
   z-index: 10;
   backdrop-filter: blur(12px);
+  border-bottom: 1px solid oklch(44.2% 0.017 285.786);
+}
+
+.logo {
+  width: 28px;
 }
 
 #header-left {
   display: flex;
   color: white;
-  gap: 12px;
+  gap: 8px;
 }
 
 .header-title {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+
+  .date {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 }
 
 ::ng-deep.mat-mdc-menu-panel {
   max-width: 100% !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep.mat-mdc-menu-content {
+  padding: 0 !important;
 }
 
 .demo-inline-calendar-card {
   width: 300px;
+}
+.header-right {
+  display: flex;
+  gap: 8px;
 }

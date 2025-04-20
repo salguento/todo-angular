@@ -1,0 +1,22 @@
+<mat-dialog-content class="mat-typography">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Buscar</mat-label>
+      <input
+        matInput
+        placeholder="tarefas ou etiquetas..."
+        [(ngModel)]="inputValue"
+        name="inputValue"
+        (keydown.enter)="closeDialog()"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        aria-label="Clear"
+        (click)="inputValue=''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>

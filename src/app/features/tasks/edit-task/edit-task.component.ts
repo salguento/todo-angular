@@ -1,20 +1,24 @@
+// IMPORTS
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
   inject,
   model,
+  Input,
   signal,
+  Inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
@@ -23,33 +27,33 @@ import {
 } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task/task.service';
 
-import { Tag } from '../../../core/models/tag.model';
-import { TagService } from '../../../core/services/tag/tag.service';
-
-import { Observable, filter, map, of } from 'rxjs';
+// EDIT TASK
 @Component({
-  selector: 'app-new-task',
+  selector: 'app-edit-task',
   imports: [MatButtonModule, MatDialogModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './new-task.component.html',
-  styleUrl: './new-task.component.scss',
+  templateUrl: './edit-task.component.html',
+  styleUrl: './edit-task.component.scss',
 })
-export class NewTaskComponent {
+export class EditTaskComponent {
+  @Input({ required: true }) task!: Task;
+
   readonly dialog = inject(MatDialog);
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogNewTaskDialog);
-
-    dialogRef.afterClosed().subscribe(() => {});
+    const dialogRef = this.dialog.open(DialogEditTaskDialog, {
+      data: this.task,
+    });
   }
 }
 
+// DIALOG
+
 @Component({
-  selector: 'dialog-new-task-dialog',
+  selector: 'dialog-edit-task-dialog',
   templateUrl: 'dialog.html',
   styleUrl: 'dialog.scss',
   imports: [
@@ -62,18 +66,12 @@ export class NewTaskComponent {
     MatChipsModule,
     MatIconModule,
     MatAutocompleteModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatTimepickerModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogNewTaskDialog {
-  tagService = inject(TagService);
-  tags$: Observable<Tag[]> = this.tagService.getAll();
-
-  taskService = inject(TaskService);
-  newTask: Task = {
+export class DialogEditTaskDialog {
+  editTask: Task = {
+    id: undefined,
     title: '',
     description: '',
     completed: false,
@@ -82,45 +80,39 @@ export class DialogNewTaskDialog {
     tags: [],
   };
 
-  addTodo() {
-    if (this.newTask.title) {
-      this.taskService.add(this.newTask);
-      this.newTask = {
-        title: '',
-        description: '',
-        completed: false,
-        createdAt: new Date().toString(),
-        dueDate: undefined,
-        tags: [],
-      };
-    }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Task) {
+    this.editTask = data;
   }
 
+  taskService = inject(TaskService);
+
+  updateTask() {
+    this.taskService.update(this.editTask.id!, this.editTask);
+  }
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly currentTag = model('');
+  readonly tags = signal(['']);
+  readonly allTags: string[] = ['Casa', 'Trabalho', 'Estudos'];
   readonly filteredTags = computed(() => {
     const currentTag = this.currentTag().toLowerCase();
     return currentTag
-      ? this.tags$.pipe(
-          map((tags: Tag[]) =>
-            tags.filter((tag) => tag.name.toLowerCase().includes(currentTag))
-          )
-        )
-      : this.tags$.pipe(map((tags: Tag[]) => tags.slice()));
+      ? this.allTags.filter((tag) => tag.toLowerCase().includes(currentTag))
+      : this.allTags.slice();
   });
-
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  readonly currentTag = model('mijar');
-  readonly tags = signal(['']);
 
   readonly announcer = inject(LiveAnnouncer);
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
+    // Add our tag
     if (value) {
-      this.newTask.tags?.push(value);
-      this.tagService.add({ name: value });
       this.tags.update((tags) => [...tags, value]);
     }
+
+    // Clear the input value
+    this.currentTag.set('');
   }
 
   remove(tag: string): void {
@@ -138,7 +130,7 @@ export class DialogNewTaskDialog {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.tags.update((tags) => [...tags, event.option.viewValue]);
-    this.newTask.tags?.push(event.option.viewValue);
+    this.currentTag.set('');
     event.option.deselect();
   }
 }

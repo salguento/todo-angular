@@ -1,19 +1,19 @@
-<mat-card class="card" appearance="raised">
+<!-- <mat-card class="card" appearance="raised">
   <div class="card-header">
-    <mat-checkbox> </mat-checkbox>
+    <mat-checkbox
+      [(ngModel)]="task.completed"
+      (click)="toggleTodo(task.id!, task.completed)"
+    >
+    </mat-checkbox>
     <mat-card-header class="card-title">
-      <mat-card-title>Chihuahua</mat-card-title>
+      <mat-card-title>{{ task.title }}</mat-card-title>
     </mat-card-header>
     <div class="card-options">
+      <app-edit-task [task]="task"></app-edit-task>
       <button
         mat-icon-button
         aria-label="Example icon button with a vertical three dot icon"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        aria-label="Example icon button with a vertical three dot icon"
+        (click)="deleteTodo(task.id!)"
       >
         <mat-icon>delete</mat-icon>
       </button>
@@ -21,14 +21,73 @@
   </div>
   <div class="card-body">
     <mat-card-content class="card-description">
-      <p>{{ longText }}</p>
+      <p>{{ task.description }}</p>
     </mat-card-content>
-    <mat-card-footer class="example-card-footer">
-      <mat-chip-set aria-label="Chihuahua traits">
-        <mat-chip>charming</mat-chip>
-        <mat-chip>graceful</mat-chip>
-        <mat-chip>sassy</mat-chip>
-      </mat-chip-set>
-    </mat-card-footer>
+    <div class="card-footer">
+      <mat-card-footer class="example-card-footer">
+        <mat-chip-set aria-label="Chihuahua traits">
+          @for(tag of task.tags; track tag){
+          <mat-chip>{{ tag }}</mat-chip>
+          }
+        </mat-chip-set>
+      </mat-card-footer>
+      <div>
+        @if(task.dueDate){
+        <span>Prazo:{{ task.dueDate | date : "shortDate" }}</span>
+        }
+      </div>
+    </div>
   </div>
-</mat-card>
+</mat-card> -->
+
+<mat-list-item class="task-item">
+  <div class="task-body">
+    <div class="task-header">
+      <mat-checkbox
+        [(ngModel)]="task.completed"
+        (click)="toggleTodo(task.id!, task.completed)"
+      >
+      </mat-checkbox>
+      <div class="task-main">
+        <div class="task-title">
+          <p>{{ task.title }}</p>
+        </div>
+        <div class="task-description">
+          <p>{{ task.description }}</p>
+        </div>
+        <div class="task-footer">
+          @if(task.tags?.length){
+          <div class="tags">
+            <mat-icon class="footer-icon">label</mat-icon>
+            @for(tag of task.tags; track tag){
+            <span>{{ tag }}</span>
+            }
+          </div>
+          }
+          <div class="due-date">
+            @if(task.dueDate){
+            <mat-icon class="footer-icon">event</mat-icon>
+            <span>{{ task.dueDate | date : "shortDate" }}</span>
+            }
+          </div>
+          <div class="due-date">
+            @if(task.dueDate && hasTime(task.dueDate)){
+            <mat-icon class="footer-icon">alarm</mat-icon>
+            <span>{{ task.dueDate | date : "shortTime" }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="task-options">
+      <app-edit-task [task]="task"></app-edit-task>
+      <button
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+        (click)="deleteTodo(task.id!)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div></mat-list-item
+>

@@ -6,11 +6,15 @@
         Todos
       </ng-template>
       <div class="list-body">
-        @for (item of items; track item) {
-          <app-task></app-task>
-        } @empty {
+        <mat-list class="mat-list">
+          @if (toDo$ | async; as todos) { @for (todo of todos; track todo.id) {
+
+          <app-task [task]="todo"></app-task>
+
+          } @empty {
           <li>There are no items.</li>
-        }
+          } }
+        </mat-list>
       </div>
     </mat-tab>
 
@@ -20,11 +24,13 @@
         Completed
       </ng-template>
       <div class="list-body">
-        @for (item of items; track item) {
-          <app-task></app-task>
-        } @empty {
+        <mat-list class="mat-list">
+          @if (done$ | async; as todos) { @for (todo of todos; track todo.id) {
+          <app-task [task]="todo"></app-task>
+          } @empty {
           <li>There are no items.</li>
-        }
+          } }
+        </mat-list>
       </div>
     </mat-tab>
   </mat-tab-group>
