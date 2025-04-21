@@ -30,7 +30,7 @@ import { TaskService } from '../../../core/services/task/task.service';
 import { Tag } from '../../../core/models/tag.model';
 import { TagService } from '../../../core/services/tag/tag.service';
 
-import { Observable, filter, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 @Component({
   selector: 'app-new-task',
   imports: [MatButtonModule, MatDialogModule, MatIconModule],
@@ -71,7 +71,6 @@ export class NewTaskComponent {
 export class DialogNewTaskDialog {
   tagService = inject(TagService);
   tags$: Observable<Tag[]> = this.tagService.getAll();
-  tagAdded = false;
   taskService = inject(TaskService);
 
   newTask: Task = {
@@ -146,14 +145,11 @@ export class DialogNewTaskDialog {
   }
 
   addTag(tagString: string) {
-    this.tags$.subscribe((tags) => {
-      tags.map((tag) => {
-        if (tag.name.includes(tagString)) {
-          return;
-        }
-      });
+    this.tags$.subscribe((tags: Tag[]) => {
+      let found = tags.find((tag: Tag) => tag.name === tagString);
+      if (!found) {
+        this.tagService.add({ name: tagString });
+      }
     });
-    this.tagService.add({ name: tagString });
-    return;
   }
 }

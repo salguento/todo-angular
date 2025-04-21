@@ -1,45 +1,3 @@
-<!-- <mat-card class="card" appearance="raised">
-  <div class="card-header">
-    <mat-checkbox
-      [(ngModel)]="task.completed"
-      (click)="toggleTodo(task.id!, task.completed)"
-    >
-    </mat-checkbox>
-    <mat-card-header class="card-title">
-      <mat-card-title>{{ task.title }}</mat-card-title>
-    </mat-card-header>
-    <div class="card-options">
-      <app-edit-task [task]="task"></app-edit-task>
-      <button
-        mat-icon-button
-        aria-label="Example icon button with a vertical three dot icon"
-        (click)="deleteTodo(task.id!)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div class="card-body">
-    <mat-card-content class="card-description">
-      <p>{{ task.description }}</p>
-    </mat-card-content>
-    <div class="card-footer">
-      <mat-card-footer class="example-card-footer">
-        <mat-chip-set aria-label="Chihuahua traits">
-          @for(tag of task.tags; track tag){
-          <mat-chip>{{ tag }}</mat-chip>
-          }
-        </mat-chip-set>
-      </mat-card-footer>
-      <div>
-        @if(task.dueDate){
-        <span>Prazo:{{ task.dueDate | date : "shortDate" }}</span>
-        }
-      </div>
-    </div>
-  </div>
-</mat-card> -->
-
 <mat-list-item class="task-item">
   <div class="task-body">
     <div class="task-header">
@@ -80,7 +38,9 @@
       </div>
     </div>
     <div class="task-options">
+      @if(task.id){
       <app-edit-task [task]="task"></app-edit-task>
+      }
       <button
         mat-icon-button
         aria-label="Example icon button with a vertical three dot icon"
