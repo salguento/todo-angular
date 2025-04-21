@@ -44,11 +44,11 @@
     </div>
     <mat-form-field class="example-chip-list">
       <mat-label>Etiquetas</mat-label>
-      <mat-chip-grid #chipGrid aria-label="Tag selection">
+      <mat-chip-grid #chipGrid aria-label="Selecionar de etiqueta">
         @for (tag of tags(); track $index) { @if (tag === ""){ }@else{
         <mat-chip-row (removed)="remove(tag)">
           {{tag}}
-          <button matChipRemove [attr.aria-label]="'remove ' + tag">
+          <button matChipRemove [attr.aria-label]="'remover ' + tag">
             <mat-icon>cancelar</mat-icon>
           </button>
         </mat-chip-row>
