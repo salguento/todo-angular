@@ -66,9 +66,13 @@ export class TaskListComponent {
       map((tasks: Task[]) =>
         tasks.filter(
           (task) =>
-            task.title.includes(this.search) ||
-            task.description?.includes(this.search) ||
-            task.tags?.some((tag: string) => tag.includes(this.search))
+            task.title.toLowerCase().includes(this.search.toLowerCase()) ||
+            task.description
+              ?.toLowerCase()
+              .includes(this.search.toLowerCase()) ||
+            task.tags?.some((tag: string) =>
+              tag.toLowerCase().includes(this.search.toLowerCase())
+            )
         )
       )
     );
@@ -76,9 +80,13 @@ export class TaskListComponent {
       map((tasks: Task[]) =>
         tasks.filter(
           (task) =>
-            task.title.includes(this.search) ||
-            task.description?.includes(this.search) ||
-            task.tags?.some((tag: string) => tag.includes(this.search))
+            task.title.toLowerCase().includes(this.search.toLowerCase()) ||
+            task.description
+              ?.toLowerCase()
+              .includes(this.search.toLowerCase()) ||
+            task.tags?.some((tag: string) =>
+              tag.toLowerCase().includes(this.search.toLowerCase())
+            )
         )
       )
     );
