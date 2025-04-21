@@ -12,7 +12,7 @@
           <app-task [task]="todo"></app-task>
 
           } @empty {
-          <li>There are no items.</li>
+          <div class="empty-body"><span>Nenhuma tarefa</span></div>
           } }
         </mat-list>
       </div>
@@ -28,7 +28,7 @@
           @if (done$ | async; as todos) { @for (todo of todos; track todo.id) {
           <app-task [task]="todo"></app-task>
           } @empty {
-          <li>There are no items.</li>
+          <div class="empty-body"><span>Nenhuma tarefa</span></div>
           } }
         </mat-list>
       </div>

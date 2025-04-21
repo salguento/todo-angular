@@ -18,3 +18,13 @@
 .mat-list {
   padding: 0;
 }
+
+.empty-body {
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 2rem;
+  color: gray;
+}
