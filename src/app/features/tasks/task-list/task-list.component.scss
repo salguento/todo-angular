@@ -28,3 +28,7 @@
   font-size: 2rem;
   color: gray;
 }
+
+::ng-deep.mdc-tab__text-label {
+  gap: 4px !important;
+}
