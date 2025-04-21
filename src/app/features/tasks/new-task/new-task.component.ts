@@ -71,8 +71,9 @@ export class NewTaskComponent {
 export class DialogNewTaskDialog {
   tagService = inject(TagService);
   tags$: Observable<Tag[]> = this.tagService.getAll();
-
+  tagAdded = false;
   taskService = inject(TaskService);
+
   newTask: Task = {
     title: '',
     description: '',
@@ -108,7 +109,7 @@ export class DialogNewTaskDialog {
   });
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  readonly currentTag = model('mijar');
+  readonly currentTag = model('');
   readonly tags = signal(['']);
 
   readonly announcer = inject(LiveAnnouncer);
@@ -116,9 +117,9 @@ export class DialogNewTaskDialog {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    if (value) {
+    if (value && !this.newTask.tags?.includes(value)) {
       this.newTask.tags?.push(value);
-      this.tagService.add({ name: value });
+      this.addTag(value);
       this.tags.update((tags) => [...tags, value]);
     }
   }
@@ -137,8 +138,22 @@ export class DialogNewTaskDialog {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.tags.update((tags) => [...tags, event.option.viewValue]);
-    this.newTask.tags?.push(event.option.viewValue);
+    if (!this.newTask.tags?.includes(event.option.viewValue)) {
+      this.tags.update((tags) => [...tags, event.option.viewValue]);
+      this.newTask.tags?.push(event.option.viewValue);
+    }
     event.option.deselect();
+  }
+
+  addTag(tagString: string) {
+    this.tags$.subscribe((tags) => {
+      tags.map((tag) => {
+        if (tag.name.includes(tagString)) {
+          return;
+        }
+      });
+    });
+    this.tagService.add({ name: tagString });
+    return;
   }
 }
